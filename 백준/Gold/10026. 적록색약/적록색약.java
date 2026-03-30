@@ -24,14 +24,27 @@ public class Main {
         		}
         }
         
-        int ans1 = 0;
+        int ans1 = bfs(maps, N);
+        
+        for(int i = 0; i < N; i++) for(int k = 0; k < N; k++) if(maps[i][k] == 1) maps[i][k] = 0;
+
+        int ans2 = bfs(maps, N);
+        
+        bw.write(ans1 + " " + ans2);
+        
+        bw.flush();
+    	
+    }
+    
+    public static int bfs(int[][] maps, int N) {
+    		int ans = 0;
         boolean[][] visited = new boolean[N][N];
         Queue<int[]> q = new LinkedList<>();
         for(int i = 0; i < N; i++) {
         		for(int k = 0; k < N; k++) {
         			if(!visited[i][k]) {
         				q.add(new int[] {i, k});
-        				ans1++;
+        				ans++;
         				visited[i][k] = true;
         				while(!q.isEmpty()) {
         					int[] temp = q.poll();
@@ -58,47 +71,7 @@ public class Main {
         			
         		}
         }
-        
-        for(int i = 0; i < N; i++) for(int k = 0; k < N; k++) if(maps[i][k] == 1) maps[i][k] = 0;
-
-        int ans2 = 0;
-        visited = new boolean[N][N];
-        q = new LinkedList<>();
-        q.add(new int[] {0, 0});
-        for(int i = 0; i < N; i++) {
-    		for(int k = 0; k < N; k++) {
-    			if(!visited[i][k]) {
-    				q.add(new int[] {i, k});
-    				ans2++;
-    				visited[i][k] = true;
-    				while(!q.isEmpty()) {
-    					int[] temp = q.poll();
-    					int x = temp[0];
-    					int y = temp[1];
-						if(x - 1 >= 0) if(maps[x][y] == maps[x - 1][y] && !visited[x - 1][y]) {
-							visited[x-1][y] = true;
-							q.add(new int[] {x-1, y});
-						}
-						if(y - 1 >= 0) if(maps[x][y] == maps[x][y - 1] && !visited[x][y - 1]) {
-							visited[x][y-1] = true;
-							q.add(new int[] {x, y-1});
-						}
-						if(x + 1 < N) if(maps[x][y] == maps[x + 1][y] && !visited[x + 1][y]) {
-							visited[x+1][y] = true;
-							q.add(new int[] {x+1, y});
-						}
-						if(y + 1 < N) if(maps[x][y] == maps[x][y + 1] && !visited[x][y + 1]) {
-							visited[x][y+1] = true;
-							q.add(new int[] {x, y+1});
-						}
-    				}
-    			} else continue;
-    			
-    		}
-    }
-        bw.write(ans1 + " " + ans2);
-        
-        bw.flush();
+    		return ans;
     	
     }
 }
